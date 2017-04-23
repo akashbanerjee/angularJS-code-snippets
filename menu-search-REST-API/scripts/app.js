@@ -38,6 +38,7 @@ angular.module('NarrowItDownApp', [])
     var menu = this;
     menu.itemName = "";
     menu.searchButtonText = "";
+    
     console.log("menu.searchButtonText", menu.searchButtonText);
 
     menu.getMatchedMenuItems = function() {
@@ -46,6 +47,8 @@ angular.module('NarrowItDownApp', [])
       console.log("menu.searchButtonText", menu.searchButtonText);
       if(menu.itemName  === "") {
         menu.found =[];
+        menu.searchButtonText = "Searched";
+        console.log("menu.searchButtonText", menu.searchButtonText);
         return;
       }
 
