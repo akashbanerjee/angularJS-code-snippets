@@ -10,9 +10,6 @@ MenuDataService .$inject = ['$http', 'ApiBasePath'];
 function MenuDataService ($http, ApiBasePath) {
   var service = this;
 
-
- 
-
   
   service.getAllCategories  = function () {
     
@@ -23,19 +20,16 @@ function MenuDataService ($http, ApiBasePath) {
       
   };
 
-/*  service.getItemsForCategory  = function (categoryShortName) {
-      var deferred = $q.defer();
-
+  service.getItemsForCategory  = function (categoryShortName) {
       
-      $timeout(function () {
-        
-        deferred.resolve(items);
-      }, 800);
+      return $http({
+        method: "GET",
+        url: (ApiBasePath + "/menu_items.json"),
+        params: {category: categoryShortName}
+      });
 
-      return deferred.promise;
-    };*/  
-
-
+  };
 }
 
-})();
+
+})(); 
