@@ -7,6 +7,7 @@
   
   ItemDetailController.$inject = ['items'];
   function ItemDetailController(items) {
+    console.log("Inside Item detail Controller");
     var itemDetail = this;
     itemDetail.items = items;
   }
