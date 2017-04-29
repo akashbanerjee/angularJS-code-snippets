@@ -7,48 +7,46 @@ angular.module('MenuApp')
 RoutesConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
 function RoutesConfig($stateProvider, $urlRouterProvider) {
 
-
+  // Redirect to home page if no other URL matches
   $urlRouterProvider.otherwise('/');
 
-
+  // *** Set up UI states ***
   $stateProvider
 
- 
+  // Home page
   .state('home', {
     url: '/',
-    templateUrl: 'src/shoppinglist/templates/home.template.html'
+    templateUrl: 'src/home.template.html'
   })
 
-
+  // Categories page
   .state('categories', {
     url: '/categories',
-    templateUrl: 'src/shoppinglist/templates/main-shoppinglist.template.html',
-    controller: 'MainShoppingListController as categories',
+    templateUrl: 'src/categories.template.html',
+    controller: 'CategoriesController as categoriesCtrl',
     resolve: {
-      items: ['MenuDataService ', function (MenuDataService) {console.log("inside resolve1");
-        return MenuDataService.getAllCategories().then(function(response)  {
-          
+      categories: ['MenuDataService', function(MenuDataService) {
+        return MenuDataService.getAllCategories().then(function(response) {
           return response.data;
         });
       }]
     }
   })
 
-   .state('items', {
+  // Items page
+  .state('items', {
     url: '/items/{category}',
-    templateUrl: 'src/shoppinglist/templates/items.template.html',
-    controller: 'ItemDetailController as itemDetail',
+    templateUrl: 'src/items.template.html',
+    controller: 'ItemsController as itemsCtrl',
     resolve: {
-      items: ['MenuDataService', '$stateParams', function (MenuDataService,$stateParams) {
-        console.log("inside resolve");
-          return MenuDataService.getItemsForCategory($stateParams.category).then(function(response)  {
-              return response.data.menu_items;
-            });
-        }]
+      items: ['MenuDataService', '$stateParams', function(MenuDataService, $stateParams) {
+        return MenuDataService.getItemsForCategory($stateParams.category).then(function(response) {
+          return response.data.menu_items;
+        });
+      }]
     }
-  });
-
- 
-} 
+  })
+  ;
+}
 
 })();
